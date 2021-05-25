@@ -1,0 +1,56 @@
+header {
+  text-align: center;
+}
+
+form {
+  text-align: center;
+}
+
+bodyStyles {
+  background-color: gray;
+  width: auto;
+  min-height: 80vh;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 50px;
+  align-items: top;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.guestlist {
+  margin-left: 60px;
+}
+
+td {
+  text-align: center;
+  font-size: 20px;
+}
+
+.attending {
+  color: green;
+}
+
+.notAttending {
+  color: red;
+}
+
+.deleteButton {
+  color: red;
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  text-shadow: 1px 0px 3px gray;
+}
+
+.attendButton {
+  color: grey;
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  text-shadow: 1px 0px 3px gray;
+}
+#onClickChange {
+  color: green;
+}
