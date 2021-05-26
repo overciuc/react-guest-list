@@ -1,41 +1,153 @@
-header {
+body {
+  background-color: #5d576b;
+  z-index: -100;
+}
+
+section {
+  display: block;
+  align-items: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+  margin-bottom: 50px;
+  margin-top: 100px;
+}
+/*
+.cornerImage {
+  background-color: #fff;
+  background-image: url('./images/pink_brown_swirly.png');
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+*/
+.listBackground {
+  display: flex;
+  max-width: 100%;
+  width: 80%;
+  min-width: 800px;
+  margin-left: auto;
+  background-color: #fff;
+  justify-content: center;
+  min-height: fit-content;
+  max-height: fit-content;
+  padding: 10px 15px;
+  padding-bottom: 80px;
+  margin-top: 10px;
+  box-shadow: inset #009688 0 0 0 5px, inset #059c8e 0 0 0 1px,
+    inset #0cab9c 0 0 0 10px, inset #1fbdae 0 0 0 11px, inset #8ce9ff 0 0 0 16px,
+    inset #48e4d6 0 0 0 17px, inset #e5f9f7 0 0 0 21px, inset #bfecf7 0 0 0 22px;
+}
+hr {
+  margin: 0px 0px 60px 0px;
+}
+.hr3 {
+  border: 0;
+  height: 2px;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    #0cab9c,
+    transparent
+  );
+}
+
+h1 {
+  font-family: 'Satisfy', cursive;
   text-align: center;
+  font-size: 50px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+div {
+  width: 80%;
+  margin: auto;
+}
+
+.listHeader {
+  font-family: 'Dancing Script', cursive;
+  font-size: 40px;
+  width: 100%;
+  text-align: center;
+  color: #0cab9c;
+  margin-bottom: 20px;
 }
 
 form {
-  text-align: center;
-}
-
-bodyStyles {
-  background-color: gray;
-  width: auto;
-  min-height: 80vh;
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 50px;
-  align-items: top;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
+  width: 100%;
+  min-width: 900px;
 }
 
-.guestlist {
-  margin-left: 60px;
+input {
+  width: 300px;
+  height: 30px;
+  margin: 5px auto;
+  /*border-color: #0cab9c;*/
+  border-radius: 5px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.39);
+}
+
+::placeholder {
+  padding-left: 5px;
+  color: black;
+  opacity: 0.5;
+}
+
+label {
+  width: 300px;
+  height: 20px;
+  margin: 10px 20px 0px 20px;
+  text-align: left;
+  font-family: 'Satisfy', cursive;
+  font-size: 20px;
+  opacity: 0.7;
+  color: #fff;
+}
+
+/*Table Styles*/
+table {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 td {
   text-align: center;
   font-size: 20px;
+  width: 200px;
+  padding: 5px 10px;
+  border-bottom: 1px dashed gray;
 }
 
-.attending {
-  color: green;
+th {
+  width: 200px;
+  text-align: center;
+  padding-bottom: 20px;
+  font-size: 20px;
+  color: #0cab9c;
+  font-family: 'Dancing Script';
 }
 
-.notAttending {
-  color: red;
+.extraMarginBottom {
+  margin-bottom: 20px;
 }
 
+.thAlign {
+  text-align: left;
+}
+
+.tdName {
+  text-align: left;
+  font-size: 20px;
+  width: 200px;
+  color: black;
+  font-family: 'Dancing Script', cursive;
+}
+
+/*Buttons Styles*/
 .deleteButton {
   color: red;
   border: none;
@@ -45,12 +157,46 @@ td {
 }
 
 .attendButton {
-  color: grey;
+  color: rgba(207, 207, 207, 0.5);
   border: none;
   background-color: transparent;
   font-size: 20px;
+  font-weight: bold;
+  /*text-shadow: 1px 0px 0px gray;*/
+}
+.attendButtonConfirmed {
+  color: #67eb34;
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  font-weight: bold;
   text-shadow: 1px 0px 3px gray;
 }
-#onClickChange {
-  color: green;
+
+.addGuestButton {
+  width: 200px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: rgb(12, 171, 156);
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  margin: 40px auto;
+}
+
+.indicatorContainer {
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  margin: auto;
+}
+
+.indicatorContainer .loader {
+  margin: auto;
+  z-index: 1000;
+  position: absolute;
+  width: 50px;
+  height: 50px;
 }

@@ -1,60 +1,68 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import LoadingIndicator from './LoadingIndicator';
 
-function App() {
-  //set state for guestList array
-  const [list, setList] = useState([]);
+export default function App() {
   const baseUrl = 'http://localhost:5000';
-
-  //fetch guest list from server, runs once
-  useEffect(() => {
-    const getList = async () => {
-      const response = await fetch(`${baseUrl}/`);
-      const allGuests = await response.json();
-      setList(allGuests);
-    };
-
-    getList();
-  }, []);
-
-  // set state for input fields
+  const [list, setList] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
-  //when Submit button is clicked:
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const [disabled, setDisabled] = useState(true);
 
-    // create a new guest
-    async function newGuest() {
-      const response = await fetch(`${baseUrl}/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-        }),
-      });
-      //eslint-disable-next-line no-unused-vars
-      const createdGuest = await response.json();
-
-      window.location.reload();
-    }
-
-    newGuest();
+  const useLoader = () => {
+    const [loading, setLoading] = useState(false);
+    return [
+      loading ? <LoadingIndicator /> : null,
+      () => setLoading(true), //Show the loading indicator
+      () => setLoading(false), //Hide the loading indicator
+    ];
   };
 
-  // set state for checkbox
-  const [checkboxes, setCheckboxes] = useState({});
+  const [loader, showLoader, hideLoader] = useLoader();
 
-  const checkboxKeys = Object.keys(checkboxes);
+  useEffect(() => {
+    const getList = async () => {
+      showLoader();
+      const response = await fetch(`${baseUrl}/`);
+      const allGuests = await response.json();
 
-  //when Delete button is clicked:
-  function handleDelete() {
+      setTimeout(function () {
+        setList(allGuests);
+        hideLoader();
+        setDisabled(false);
+      }, 500);
+    };
+
+    getList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSubmit = (event) => {
+    newGuest();
+    event.preventDefault();
+  };
+
+  async function newGuest() {
+    const response = await fetch(`${baseUrl}/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+      }),
+    });
+    //eslint-disable-next-line no-unused-vars
+    const createdGuest = await response.json();
+
+    window.location.reload();
+  }
+
+  function handleDelete(id) {
     async function deleteGuest() {
-      const response = await fetch(`${baseUrl}/1/${checkboxKeys}`, {
+      const response = await fetch(`${baseUrl}/${id}`, {
         method: 'DELETE',
       });
       //eslint-disable-next-line no-unused-vars
@@ -65,10 +73,9 @@ function App() {
     deleteGuest();
   }
 
-  //when Edit button is clicked:
-  function handleEdit(id) {
+  function handleAttend(id) {
     async function editGuest() {
-      const response = await fetch(`${baseUrl}/1/${checkboxKeys}`, {
+      const response = await fetch(`${baseUrl}/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -80,98 +87,97 @@ function App() {
 
       window.location.reload();
     }
+
     editGuest();
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Register the guest:</h1>
-      </header>
-      {/* Guest Name input fields */}
-      <section className="bodyStyles">
-        <form onSubmit={handleSubmit}>
-          <label>
-            <span>First name: </span>
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            onChange={(event) => setFirstName(event.target.value)}
-          />
-          <br />
-          <br />
-          <label>Last name: </label>
-          <input
-            type="text"
-            id="lastName"
-            onChange={(event) => setLastName(event.target.value)}
-          />
-          <br />
-
-          <p>
-            <button>Submit</button>
-          </p>
-        </form>
-
-        {/* Show the list of guests */}
-        <h1 className="guestlist"> Guest list:</h1>
-        <table>
-          <tbody>
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Attending</th>
-            </tr>
-            {list.map((item) => (
-              <tr
-                key={item.id}
-                className={item.attending ? 'attending' : 'notAttending'}
-              >
-                <td>{item.firstName}</td>
-                <td>{item.lastName}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    defaultChecked={checkboxes[item.id]}
-                    onChange={() => {
-                      setCheckboxes({ ...checkboxes, [item.id]: true });
-                    }}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        {/* Confirm-Button */}
-        <p>
-          <label>
+    <>
+      <section>
+        <div>
+          <h1>Enter guest name</h1>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor={firstName}>
+              First Name:
+              <input
+                placeholder="enter first name"
+                onChange={(event) => setFirstName(event.currentTarget.value)}
+                type="text"
+                id="firstName"
+                disabled={disabled ? true : false}
+              ></input>
+            </label>
+            <label htmlFor={lastName}>
+              Last Name:
+              <input
+                placeholder="enter last name"
+                onChange={(event) => setLastName(event.currentTarget.value)}
+                type="text"
+                id="lastName"
+                disabled={disabled ? true : false}
+              ></input>
+            </label>
             <button
-              type="button"
-              onClick={(item) => handleEdit(item.id)}
-              id="confirm"
+              className="addGuestButton"
+              disabled={disabled ? true : false}
             >
-              Confirm guest attendance
+              Add guest
             </button>
-          </label>
-        </p>
-
-        {/* Delete-Button */}
-        <p>
-          <label>
-            <button
-              type="button"
-              onClick={(item) => handleDelete(item.id)}
-              id="delete"
-            >
-              Delete guest
-            </button>
-          </label>
-        </p>
+          </form>
+          {loader}
+        </div>
       </section>
-    </div>
+
+      <section className="listBackground">
+        <div>
+          <div>
+            <h2 className="listHeader">List of Guests</h2>
+            <hr className="hr3" />
+            <table>
+              <tbody>
+                <tr className="extraMarginBottom">
+                  <th className="thAlign">First Name</th>
+                  <th className="thAlign">Last Name</th>
+                  <th>Attending</th>
+                  <th>Remove</th>
+                </tr>
+
+                {list.map((guest) => (
+                  <tr key={guest.id}>
+                    <td className="tdName">{guest.firstName}</td>
+                    <td className="tdName">{guest.lastName}</td>
+                    <td>
+                      <button
+                        className={
+                          guest.attending
+                            ? 'attendButtonConfirmed'
+                            : 'attendButton'
+                        }
+                        type="button"
+                        onClick={() => {
+                          handleAttend(guest.id);
+                        }}
+                      >
+                        &#10003;
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="deleteButton"
+                        type="button"
+                        onClick={() => handleDelete(guest.id)}
+                        id="delete"
+                      >
+                        x
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
-
-export default App;
