@@ -35,7 +35,6 @@ export default function App() {
     };
 
     getList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = (event) => {
@@ -54,7 +53,7 @@ export default function App() {
         lastName: lastName,
       }),
     });
-    //eslint-disable-next-line no-unused-vars
+
     const createdGuest = await response.json();
 
     window.location.reload();
@@ -65,7 +64,7 @@ export default function App() {
       const response = await fetch(`${baseUrl}/${id}`, {
         method: 'DELETE',
       });
-      //eslint-disable-next-line no-unused-vars
+
       const deletedGuest = await response.json();
 
       window.location.reload();
@@ -82,7 +81,7 @@ export default function App() {
         },
         body: JSON.stringify({ attending: true }),
       });
-      //eslint-disable-next-line no-unused-vars
+
       const updatedGuest = await response.json();
 
       window.location.reload();
