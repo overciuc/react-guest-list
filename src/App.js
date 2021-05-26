@@ -14,8 +14,8 @@ export default function App() {
     const [loading, setLoading] = useState(false);
     return [
       loading ? <LoadingIndicator /> : null,
-      () => setLoading(true), //Show the loading indicator
-      () => setLoading(false), //Hide the loading indicator
+      () => setLoading(true), // Show the loading indicator
+      () => setLoading(false), // Hide the loading indicator
     ];
   };
 
@@ -35,12 +35,8 @@ export default function App() {
     };
 
     getList();
+    // eslint-disable-next-line
   }, []);
-
-  const handleSubmit = (event) => {
-    newGuest();
-    event.preventDefault();
-  };
 
   async function newGuest() {
     const response = await fetch(`${baseUrl}/`, {
@@ -53,18 +49,23 @@ export default function App() {
         lastName: lastName,
       }),
     });
-
+    // eslint-disable-next-line
     const createdGuest = await response.json();
 
     window.location.reload();
   }
+
+  const handleSubmit = (event) => {
+    newGuest();
+    event.preventDefault();
+  };
 
   function handleDelete(id) {
     async function deleteGuest() {
       const response = await fetch(`${baseUrl}/${id}`, {
         method: 'DELETE',
       });
-
+      // eslint-disable-next-line
       const deletedGuest = await response.json();
 
       window.location.reload();
@@ -81,7 +82,7 @@ export default function App() {
         },
         body: JSON.stringify({ attending: true }),
       });
-
+      // eslint-disable-next-line
       const updatedGuest = await response.json();
 
       window.location.reload();
@@ -104,7 +105,7 @@ export default function App() {
                 type="text"
                 id="firstName"
                 disabled={disabled ? true : false}
-              ></input>
+              />
             </label>
             <label htmlFor={lastName}>
               Last Name:
@@ -114,7 +115,7 @@ export default function App() {
                 type="text"
                 id="lastName"
                 disabled={disabled ? true : false}
-              ></input>
+              />
             </label>
             <button
               className="addGuestButton"
