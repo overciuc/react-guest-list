@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import LoadingIndicator from './LoadingIndicator';
 
 export default function App() {
-  const baseUrl = 'http://localhost:5000';
+  const baseUrl = 'https://olgas-react-guest-list.herokuapp.com';
   const [list, setList] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -26,7 +26,11 @@ export default function App() {
       showLoader();
       const response = await fetch(`${baseUrl}/`);
       const allGuests = await response.json();
-
+      /*
+      setList(allGuests);
+      hideLoader();
+      setDisabled(false);
+       */
       setTimeout(function () {
         setList(allGuests);
         hideLoader();
