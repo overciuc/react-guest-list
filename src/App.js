@@ -26,16 +26,16 @@ export default function App() {
       showLoader();
       const response = await fetch(`${baseUrl}/`);
       const allGuests = await response.json();
-      /*
+
       setList(allGuests);
       hideLoader();
       setDisabled(false);
-       */
+      /*
       setTimeout(function () {
         setList(allGuests);
         hideLoader();
         setDisabled(false);
-      }, 500);
+      }, 500);  */
     };
 
     getList();
@@ -56,7 +56,7 @@ export default function App() {
     // eslint-disable-next-line
     const createdGuest = await response.json();
 
-    window.location.reload();
+    // window.location.reload();
   }
 
   const handleSubmit = (event) => {
@@ -72,7 +72,7 @@ export default function App() {
       // eslint-disable-next-line
       const deletedGuest = await response.json();
 
-      window.location.reload();
+      // window.location.reload();
     }
     deleteGuest();
   }
@@ -89,7 +89,7 @@ export default function App() {
       // eslint-disable-next-line
       const updatedGuest = await response.json();
 
-      window.location.reload();
+      // window.location.reload();
     }
 
     editGuest();

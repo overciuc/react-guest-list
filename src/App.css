@@ -12,14 +12,7 @@ section {
   margin-bottom: 50px;
   margin-top: 100px;
 }
-/*
-.cornerImage {
-  background-color: #fff;
-  background-image: url('./images/pink_brown_swirly.png');
-  background-repeat: no-repeat;
-  background-position: left top;
-}
-*/
+
 .listBackground {
   display: flex;
   max-width: 100%;
