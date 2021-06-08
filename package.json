@@ -1,5 +1,5 @@
 {
-  "name": "react-guest-list",
+  "name": "guestlist-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -62,5 +62,7 @@
   },
   "resolutions": {
     "eslint-plugin-react": "7.23.2"
-  }
+  },
+  "keywords": [],
+  "description": ""
 }
