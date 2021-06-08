@@ -7,7 +7,6 @@ export default function App() {
   const [list, setList] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-
   const [disabled, setDisabled] = useState(true);
 
   const useLoader = () => {
@@ -28,19 +27,12 @@ export default function App() {
       const allGuests = await response.json();
 
       setList(allGuests);
-      hideLoader();
       setDisabled(false);
-      /*
-      setTimeout(function () {
-        setList(allGuests);
-        hideLoader();
-        setDisabled(false);
-      }, 500);  */
     };
 
     getList();
-    // eslint-disable-next-line
-  }, []);
+    hideLoader();
+  });
 
   async function newGuest() {
     const response = await fetch(`${baseUrl}/`, {
@@ -53,10 +45,8 @@ export default function App() {
         lastName: lastName,
       }),
     });
-    // eslint-disable-next-line
     const createdGuest = await response.json();
-
-    window.location.reload();
+    return createdGuest;
   }
 
   const handleSubmit = (event) => {
@@ -69,10 +59,8 @@ export default function App() {
       const response = await fetch(`${baseUrl}/${id}`, {
         method: 'DELETE',
       });
-      // eslint-disable-next-line
       const deletedGuest = await response.json();
-
-      window.location.reload();
+      return deletedGuest;
     }
     deleteGuest();
   }
@@ -86,12 +74,10 @@ export default function App() {
         },
         body: JSON.stringify({ attending: true }),
       });
-      // eslint-disable-next-line
+
       const updatedGuest = await response.json();
-
-      window.location.reload();
+      return updatedGuest;
     }
-
     editGuest();
   }
 
