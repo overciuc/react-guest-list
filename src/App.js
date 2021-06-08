@@ -2,22 +2,21 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import LoadingIndicator from './LoadingIndicator';
 
+const useLoader = () => {
+  const [loading, setLoading] = useState(false);
+  return [
+    loading ? <LoadingIndicator /> : null,
+    () => setLoading(true), // Show the loading indicator
+    () => setLoading(false), // Hide the loading indicator
+  ];
+};
+
 export default function App() {
   const baseUrl = 'https://olgas-react-guest-list.herokuapp.com';
   const [list, setList] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [disabled, setDisabled] = useState(true);
-
-  const useLoader = () => {
-    const [loading, setLoading] = useState(false);
-    return [
-      loading ? <LoadingIndicator /> : null,
-      () => setLoading(true), // Show the loading indicator
-      () => setLoading(false), // Hide the loading indicator
-    ];
-  };
-
   const [loader, showLoader, hideLoader] = useLoader();
 
   useEffect(() => {
